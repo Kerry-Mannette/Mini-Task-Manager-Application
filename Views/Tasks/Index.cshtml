@@ -1,0 +1,51 @@
+@model IEnumerable<Mini_Task_Manager_Application.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Tasks</h2>
+    <a class="btn btn-primary" asp-action="Create">Add Task</a>
+</div>
+
+@if (ViewBag.DbError != null)
+{
+    <div class="alert alert-warning">@ViewBag.DbError</div>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-md-6">
+            <div class="task-card @(item.IsCompleted ? "completed" : "")">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <h5 class="mb-1">@item.Title</h5>
+                        <div class="text-muted-compact">@(item.DueDate?.ToString("yyyy-MM-dd") ?? "No due date")</div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge @(item.IsCompleted ? "bg-success" : "bg-warning text-dark")">
+                            @(item.IsCompleted ? "Completed" : "Pending")
+                        </span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-1">
+                    <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="get" style="display:inline-block">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    @if (!item.IsCompleted)
+                    {
+                        <form asp-action="MarkComplete" asp-route-id="@item.Id" method="post" style="display:inline-block" class="ms-1">
+                            <button type="submit" class="btn btn-sm btn-success">Mark Complete</button>
+                            @Html.AntiForgeryToken()
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
