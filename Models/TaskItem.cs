@@ -14,7 +14,7 @@ namespace Mini_Task_Manager_Application.Models
         public string? Description { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime? DueDate { get; set; }
+        public DateTimeOffset? DueDate { get; set; }
 
         public bool IsCompleted { get; set; } = false;
     }
