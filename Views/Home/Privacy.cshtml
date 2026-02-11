@@ -2,40 +2,59 @@
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
-<p>This Privacy Policy explains what information we collect, how we use it, and
-the choices you have with respect to that information when using Mini Task
-Manager Application.</p>
+<p>This Privacy Policy describes what data the Mini Task Manager Application
+collects and how it is used. The application stores tasks and related data on a
+database configured for the app (SQLite in development; optionally PostgreSQL or
+SQL Server in production). This page explains the specific types of data the
+application handles and relevant user controls.</p>
 
-<h2>Information We Collect</h2>
+<h2>Data Collected by the Application</h2>
 <ul>
-    <li><strong>Account data:</strong> If you create an account, we store the
-    information you provide (for example, name and email).</li>
-    <li><strong>Task data:</strong> Titles, descriptions, due dates and
-    completion status of tasks you create.</li>
-    <li><strong>Usage data:</strong> Logs and analytics to help us operate and
-    improve the application.</li>
+    <li><strong>Task records:</strong> Each task contains `Title`, optional
+    `Description`, optional `DueDate`, and `IsCompleted` flag. These are stored
+    in the application's database and displayed in the Tasks views.</li>
+    <li><strong>Database metadata:</strong> EF Core migration history and any
+    schema or system metadata needed to operate the database.</li>
+    <li><strong>Application logs:</strong> Server-side logs (errors, warnings,
+    informational messages) used to operate and debug the application. Logs may
+    include timestamps and request metadata but do not intentionally contain
+    sensitive task contents unless an error includes them.</li>
 </ul>
 
-<h2>How We Use Information</h2>
-<p>We use the information to provide, maintain, and improve the service,
-respond to your requests, and for security and fraud prevention.</p>
+<h2>Where Data Is Stored</h2>
+<p>During development the app uses a local SQLite file (MiniTaskManager.db).
+In production the app expects a connection string named `DefaultConnection` —
+you may configure PostgreSQL, SQL Server, or SQLite. Connection strings are
+read from configuration or environment variables (e.g. `ConnectionStrings__DefaultConnection`).</p>
 
-<h2>Cookies and Tracking</h2>
-<p>We may use cookies or similar technologies for essential site functionality
-and analytics. You can control cookie settings in your browser.</p>
+<h2>Cookies and Client Storage</h2>
+<p>The application uses standard ASP.NET Core session and antiforgery
+mechanisms if enabled. It also uses Bootstrap and jQuery (client-side only).
+The site itself does not set profiling or advertising cookies by default.
+Browser controls can be used to manage cookies.</p>
 
 <h2>Third-Party Services</h2>
-<p>We may use third-party services (e.g. email providers, analytics). Those
-services have their own privacy policies — please review them before using the
-service.</p>
+<p>The project includes third-party libraries (Bootstrap, jQuery, EF Core).
+If you configure additional third-party services (analytics, email, storage),
+those services may collect data according to their own policies — you are
+responsible for reviewing and configuring those services.</p>
 
-<h2>Data Retention & Security</h2>
-<p>We retain personal data only as long as necessary. We take reasonable
-measures to protect your data, but cannot guarantee absolute security.</p>
+<h2>Data Retention and Deletion</h2>
+<p>Task data is retained until deleted by the user or removed from the
+database. If you need data removed, delete tasks from the UI or request
+assistance via the contact email below.</p>
 
-<h2>Your Rights</h2>
-<p>You may request access to, correction of, or deletion of your personal data.
-Contact us at the email below to make a request.</p>
+<h2>Security</h2>
+<p>Access to the database and production secrets should be secured by the
+deployment environment (connection strings in environment variables, secure
+access controls). The application does not implement authentication by
+default — if you add authentication, follow best practices for password and
+credential storage.</p>
 
-<h2>Contact</h2>
-<p>For questions about this policy, contact: <a href="mailto:privacy@example.com">privacy@example.com</a></p>
+<h2>Your Rights & Contact</h2>
+<p>You may request access, correction, or deletion of data stored by this
+application. Contact: <a href="mailto:privacy@example.com">privacy@example.com</a></p>
+
+<p>If you need the policy tailored for a deployed environment (e.g., when you
+enable authentication or add analytics), tell me which features you plan to
+enable and I will update this policy accordingly.</p>
